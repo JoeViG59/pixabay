@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pixabay.databinding.ImagesItemBinding
 import com.example.pixabay.model.Hits
 import com.example.pixabay.model.Images
+import com.squareup.picasso.Picasso
 
 class ImagesAdapter(
     private var imagesList : MutableList<Hits> = mutableListOf()
@@ -33,7 +34,11 @@ class ViewHolder(
     private val binding: ImagesItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(imagesItem: Hits){
-
+        Picasso.get()
+            .load(imagesItem.webformatURL)
+            .resize(500,500)
+            .centerCrop()
+            .into(binding.imageView)
         binding.textTags.text = imagesItem.tags
     }
 }

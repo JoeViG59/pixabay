@@ -25,34 +25,37 @@ class ImagesFragment : Fragment() {
         FragmentImagesBinding.inflate(layoutInflater)
     }
 
-    val viewModel : ImagesFragmentViewModel by viewModels()
+    private val viewModel : ImagesFragmentViewModel by viewModels()
 
     private val imagesAdapter by lazy {
         ImagesAdapter()
     }
-
-    var callApi : String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-   //    viewModel.callApi()
-
-        if (callApi == null){
-            callApi = "Calling API"
-            println(callApi)
-        }
+       viewModel.callApi()
 
         binding.rvImages.apply {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             adapter = imagesAdapter
         }
 
-//        listImages.add(sampleImagesClass)
+//        imagesAdapter.update()
+//        viewModel.images.value.let {
+//            it?.let { it1 -> imagesAdapter.update(it1.hits) }
+//        }
 
-        //imagesAdapter.update(hitsList)
+      viewModel.images.observe(viewLifecycleOwner){
+          Log.d("ImagesFragmImagesFragmentent",it.total.toString())
+          Log.d("ImagesFragmImagesFragmentent",it.totalHits.toString())
+          Log.d("ImagesFragmImagesFragmentent",it.hits.size.toString())
+          Log.d("ImagesFragmImagesFragmentent",it.hits[0].tags)
+          imagesAdapter.update(it.hits)
+      }
+
         return binding.root
     }
 

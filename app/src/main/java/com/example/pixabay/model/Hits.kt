@@ -6,5 +6,5 @@ data class Hits(
     @SerializedName("id")
     val id: Int,
     val tags: String,
-    val webFormatURL: String
+    val webformatURL: String
 )
